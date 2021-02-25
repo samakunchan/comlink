@@ -23,7 +23,6 @@ export class ListContactComponent implements OnInit {
   onDelete(id: number): void {
     this.contactService.deleteContact(id).subscribe(() => {
         console.log('Contact supprimer');
-        this.router.navigateByUrl('/');
       },
       () => alert('Un problème est survenu lors de la mise à jour des données'));
   }

@@ -65,7 +65,11 @@ export class ContactService {
   }
 
   deleteContact(id: number): Observable<IContact> {
+    const contact = this.contactSubject.getValue();
+    const index = contact.findIndex(res => res.id === id);
+    contact.splice(index, 1);
     return this.httpClient.delete<IContact>(`${environment.domain}/contacts/${id}`, this.httpOptions).pipe(
+      tap(() => this.contactSubject.next(contact)),
       catchError(err => throwError(err))
     );
   }

@@ -32,8 +32,8 @@ export class EditContactComponent implements OnInit {
   initContactEditForm(): void {
     this.contactEditForm = this.formBuilder.group({
       civilite: ['', Validators.compose([Validators.required])],
-      nom: ['', Validators.compose([Validators.required, Validators.maxLength(255)])],
-      prenom: ['', Validators.compose([Validators.required, Validators.maxLength(255)])],
+      nom: ['', Validators.compose([Validators.maxLength(255)])],
+      prenom: ['', Validators.compose([Validators.maxLength(255)])],
       id_type_voie: [''],
       num_voie: [''],
       adresse: ['', Validators.compose([Validators.maxLength(255)])],

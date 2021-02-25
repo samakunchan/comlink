@@ -29,8 +29,8 @@ export interface IContact {
     timezone_type: number
   };
   display_name: string;
+  id_cabinet: number;
   id?: number;
-  id_cabinet?: number;
   clear(): void;
 }
 
@@ -50,6 +50,7 @@ export class Contact implements IContact {
   public mobile: string;
   public fax: string;
   public display_name: string;
+  public id_cabinet: number;
 
   clear(): void {
     this.moral = false;
@@ -66,19 +67,7 @@ export class Contact implements IContact {
     this.telephone = '';
     this.mobile = '';
     this.fax = '';
+    this.id_cabinet = 1;
   }
 }
-// "moral": false,
-//   "civilite": "mr",
-//   "prenom": "Prénom",
-//   "nom": "Nom",
-//   "email": "adresse@email.com",
-//   "num_voie": null,
-//   "num_voie_suffixe": null,
-//   "id_type_voie": null,
-//   "adresse": null,
-//   "adresse_comp": null,
-//   "id_city": 0,
-//   "telephone": null,
-//   "mobile": null,
-//   "fax": null
+

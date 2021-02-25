@@ -20,11 +20,14 @@ export class AjoutContactComponent implements OnInit {
     this.initContactForm();
   }
 
+  /**
+   * NB: J'ai pas mis les Validators.required. J'attends de voir le projet complet
+   */
   initContactForm(): void {
     this.contactForm = this.formBuilder.group({
       civilite: [this.typeCivilite[0], Validators.compose([Validators.required])],
-      nom: ['', Validators.compose([Validators.required, Validators.maxLength(255)])],
-      prenom: ['', Validators.compose([Validators.required, Validators.maxLength(255)])],
+      nom: ['', Validators.compose([Validators.maxLength(255)])],
+      prenom: ['', Validators.compose([Validators.maxLength(255)])],
       id_type_voie: [''],
       num_voie: [''],
       adresse: ['', Validators.compose([Validators.maxLength(255)])],
@@ -38,7 +41,6 @@ export class AjoutContactComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.contactForm.value);
     const contact: IContact = new Contact();
     contact.clear();
     const newContact = {
