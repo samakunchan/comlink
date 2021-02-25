@@ -1,0 +1,28 @@
+<ng-container *ngIf="contact$ | async as contact">
+  <button routerLink="ajout-contact">Ajouter un contact</button>
+  <table border="1" width="100%">
+    <thead>
+    <tr>
+      <th *ngFor = "let column of headers">
+        {{column}}
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor = "let ct of contact">
+      <td>{{ct.civilite | titlecase}} {{ct.nom}}</td>
+      <td>{{ct.prenom}}</td>
+      <td >{{ct.adresse}} {{ct.adresse_comp? ', ' + ct.adresse_comp: null }}</td>
+      <td>{{ct.email}}</td>
+      <td>{{ct.telephone}}</td>
+      <td>{{ct.created_at.date | date: 'dd/MM/yyyy à hh:mm:ss'}}</td>
+      <td>{{ct.updated_at.date | date: 'dd/MM/yyyy à hh:mm:ss'}}</td>
+      <td>
+        <button (click)="onDelete(ct.id)">Supprimer</button>
+        <button routerLink="/edit-contact/{{ct.id}}">Modifier</button>
+      </td>
+    </tr>
+
+    </tbody>
+  </table>
+</ng-container>

@@ -1,0 +1,56 @@
+<a routerLink="/">Retour</a>
+<h1>Ajouter un contact</h1>
+<div>
+  <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+    <label for="civilite">
+      <select id="civilite" class="custom-select"  formControlName="civilite">
+        <option
+          *ngFor="let type of typeCivilite; let i = index"
+          [ngValue]="type">
+          {{type | titlecase}}
+        </option>
+      </select>
+    </label>
+    <label for="nom">Nom</label>
+    <input type="text" id="nom" formControlName="nom">
+
+    <label for="prenom">Prenom</label>
+    <input type="text" id="prenom" formControlName="prenom">
+
+    <div class="flex">
+      <label for="typeDeVoie">
+        <select id="typeDeVoie" class="custom-select"  formControlName="id_type_voie">
+          <option value="" disabled>Choisir le type de voie</option>
+          <option *ngFor="let voie of typeDeVoieList; let i = index" [ngValue]="i">{{voie}}</option>
+        </select>
+      </label>
+
+      <label for="numDeVoie">
+        <input type="text" id="numDeVoie" formControlName="num_voie" placeholder="Numéro de la voie">
+      </label>
+    </div>
+
+    <label for="adresse">Adresse</label>
+    <input type="text" id="adresse" formControlName="adresse">
+
+    <label for="adresseComp"></label>
+    <input type="text" id="adresseComp" formControlName="adresse_comp">
+
+    <label for="email">Email</label>
+    <input type="text" id="email" formControlName="email">
+
+    <label for="telephone">Telephone</label>
+    <input type="text" id="telephone" formControlName="telephone">
+
+    <label for="mobile">Mobile</label>
+    <input type="text" id="mobile" formControlName="mobile">
+
+    <label for="fax">Fax</label>
+    <input type="text" id="fax" formControlName="fax">
+
+    <label for="moral">Personne morale <input type="checkbox" id="moral" formControlName="moral"></label>
+
+    <hr>
+    <button type="submit" [disabled]="!contactForm.valid">save</button>
+  </form>
+</div>
