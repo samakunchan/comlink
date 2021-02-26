@@ -27,8 +27,9 @@ export class ListContactComponent implements OnInit {
           const contactReformater: IContact = {
             ...contact,
             ...{created_at: {...contact.created_at, date: newFormatCreatedAt}},
-            ...{updated_at: {date: newFormatUpdatedAt, ...contact.updated_at}}
+            ...{updated_at: {...contact.updated_at, date: newFormatUpdatedAt}}
           };
+          console.log(contactReformater);
           return contactReformater ;
         });
       })
