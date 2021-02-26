@@ -19,11 +19,18 @@ export class ListContactComponent implements OnInit {
   ngOnInit(): void {
     this.contact$ = this.contactService.contact$.pipe(
       map((contacts: IContact[]) => {
-        contacts.map(res => {
-          const arr = res.created_at.date.split(' ');
-          return arr[0] + 'T' + arr[1].replace('.000000', '') ;
+        return contacts.map((contact: IContact) => {
+          const createdAt = contact.created_at.date.split(' ');
+          const updatedAt = contact.updated_at.date.split(' ');
+          const newFormatCreatedAt = createdAt[0] + 'T' + createdAt[1].replace('.000000', '');
+          const newFormatUpdatedAt = updatedAt[0] + 'T' + updatedAt[1].replace('.000000', '');
+          const contactReformater: IContact = {
+            ...contact,
+            ...{created_at: {...contact.created_at, date: newFormatCreatedAt}},
+            ...{updated_at: {date: newFormatUpdatedAt, ...contact.updated_at}}
+          };
+          return contactReformater ;
         });
-        return contacts;
       })
     );
   }
