@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {Observable} from 'rxjs';
 import {IContact} from '../../../models/contact.model';
 import {ContactService} from '../../../services/contact.service';
-import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-list-contact',
@@ -17,23 +16,7 @@ export class ListContactComponent implements OnInit {
   constructor(private contactService: ContactService) {}
 
   ngOnInit(): void {
-    this.contact$ = this.contactService.contact$.pipe(
-      map((contacts: IContact[]) => {
-        return contacts.map((contact: IContact) => {
-          const createdAt = contact.created_at.date.split(' ');
-          const updatedAt = contact.updated_at.date.split(' ');
-          const newFormatCreatedAt = createdAt[0] + 'T' + createdAt[1].replace('.000000', '');
-          const newFormatUpdatedAt = updatedAt[0] + 'T' + updatedAt[1].replace('.000000', '');
-          const contactReformater: IContact = {
-            ...contact,
-            ...{created_at: {...contact.created_at, date: newFormatCreatedAt}},
-            ...{updated_at: {...contact.updated_at, date: newFormatUpdatedAt}}
-          };
-          console.log(contactReformater);
-          return contactReformater ;
-        });
-      })
-    );
+    this.contact$ = this.contactService.contact$;
   }
 
   onDelete(id: number): void {

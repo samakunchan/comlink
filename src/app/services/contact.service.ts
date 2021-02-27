@@ -26,16 +26,30 @@ export class ContactService {
   private loadAllContacts(): void {
     this.httpClient.get<IContact[]>(`${environment.domain}/contacts`, this.httpOptions)
       .pipe(
-        map(contacts => this.contactSubject.next(contacts)),
+        map(contacts => {
+          const listContact = contacts.map((contact: IContact) => {
+            const createdAt = contact.created_at.date.split(' ');
+            const updatedAt = contact.updated_at.date.split(' ');
+            const newFormatCreatedAt = createdAt[0] + 'T' + createdAt[1].replace('.000000', '');
+            const newFormatUpdatedAt = updatedAt[0] + 'T' + updatedAt[1].replace('.000000', '');
+            const contactReformater: IContact = {
+              ...contact,
+              ...{created_at: {...contact.created_at, date: newFormatCreatedAt}},
+              ...{updated_at: {...contact.updated_at, date: newFormatUpdatedAt}}
+            };
+            return contactReformater ;
+          });
+          this.contactSubject.next(listContact);
+        }),
         catchError(err => throwError(err))
       ).subscribe();
   }
 
   getContact(id: number): Observable<IContact> {
-    return this.httpClient.get<IContact>(`${environment.domain}/contacts/${id}`, this.httpOptions)
-      .pipe(
-        catchError(err => throwError(err))
-      );
+    return this.contact$.pipe(
+      map((contacts: IContact[]) => contacts.filter(contact => contact.id === id)[0]),
+      catchError(err => throwError(err))
+    );
   }
 
   addContact(contact: IContact): Observable<IContact> {
